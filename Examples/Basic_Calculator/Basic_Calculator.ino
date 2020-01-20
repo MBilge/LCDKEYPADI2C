@@ -4,12 +4,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define I2CADDR 0x27
+#define I2CADDR 0x27 // default address
 #define TRUE 1
 #define FALSE 0
 
-const byte ROWS = 4; //four rows
-const byte COLS = 4; //three columns
+const byte ROWS = 4; 
+const byte COLS = 4; 
 char keys[ROWS][COLS] = {
   {'1','2','3','*'},
   {'4','5','6','/'},
@@ -17,14 +17,14 @@ char keys[ROWS][COLS] = {
   {'.','0','=','+'}
 };
 // Pin connections on MCP23017 for keys
- byte rowPins[] = {3,2,1,0}; //connections of the row pinouts of the keypad
- byte colPins[] = {4,5,6,7}; //connections of the column pinouts of the keypad
+ byte rowPins[] = {3,2,1,0}; 
+ byte colPins[] = {4,5,6,7}; 
  
 Keypad_I2C keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS,I2CADDR);
 LCD_I2C lcd(I2CADDR);
 
 void setup() {
-  Serial.begin(9600);
+
   keypad.begin( );  
 
   lcd.begin(16, 2);
@@ -85,12 +85,13 @@ void loop() {
 
         // Display the result on the LCD
         lcd.print(Result);
-        // wait until any key is pressed
         
+        // wait until any key is pressed   
         while(!keypad.getKey());
         NewCal = TRUE; 
     }
 
+    // take only numeric characters
     if (key=='0' || key=='1' || key=='2' || key=='3' || key=='4' || key=='5' || 
         key=='6' || key=='7' || key=='8' || key=='9' || key=='.')
       {
